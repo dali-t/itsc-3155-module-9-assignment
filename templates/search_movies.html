@@ -6,4 +6,16 @@
 <h1 class="mb-5">Search Movie Ratings</h1>
 <p class="mb-3">Search for a movie rating below</p>
 <!-- TODO: Feature 3 -->
+<form action="/movies/search" method="post">
+    <input type="text" name="movie-search" required>
+</form>
+    {% if rating == None %}
+        <p>Please enter a movie!</p>
+        
+    {% elif rating == -1 %}
+        <p>The Movie you have requested is not in the database (or spelled incorrectly!) 😢</p>
+    {% else %}
+        <p>The rating for "{{ movie_title }}" is {{ rating }}</p>
+
+    {% endif %}
 {% endblock %}
