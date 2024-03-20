@@ -1,7 +1,6 @@
 {% extends '_layout.html' %}
 {% block title %}Movie Rating App | All Movies{% endblock %}
 {% block body %}
-
 {% if list_movies_active %}
 <h1 class="mb-5">All Movies</h1>
 <p class="mb-3">See our list of movie ratings below</p>
@@ -17,14 +16,14 @@
       </tr>
     </thead>
     <tbody>
-      {% for movie in list_movies_active %}
+      {% for movies in list_movies_active %}
       <tr>
-        <td>{{ movie.title }}</td>
-        <td>{{ movie.director }}</td>
-        <td>{{ movie.rating }}</td>
+        <td>{{ movies.title }}</td>
+        <td>{{ movies.director }}</td>
+        <td>{{ movies.rating }}</td>
         <td>
-          <a href="/movies/{{ list_movies_active.id }}/edit" class="btn btn-secondary btn-sm">Edit</a>
-          <form action="/movies/{{ list_movies_active.id }}/delete" method="post" style="display: inline;">
+          <a href="/movies/{{ movies.id }}/edit" class="btn btn-secondary btn-sm">Edit</a>
+          <form action="/movies/{{ movies.id }}/delete" method="post" style="display: inline;">
             <button type="submit" class="btn btn-danger btn-sm">Delete</button>
           </form>
         </td>
@@ -33,6 +32,7 @@
     </tbody>
 </table>
 {% else %}
-<h1>No movies have been added.</h1>
+<h1>All Movies</h1>
+<p>Unfortunately no movies have been added.</p>
 {% endif %}
 {% endblock %}
