@@ -44,22 +44,20 @@ def search_movies():
     # first get the movie by title
     # Somehow get the movie's rating
     # return that to the search_movies.html
-    return render_template('search_movies.html', search_active=True, rating=None)
-
-#Sang Vang's Post request Method
-@app.post('/movies/search')
-def movie_search():
-    movie_search = request.form.get('movie-search')
-    movie_search_trim = movie_search.strip().lower()
-
-    movie = movie_repository.get_movie_by_title(movie_search_trim)
-    if movie is not None:
-        rating = movie.rating
-        movie_title = movie.title
+    movie_search = request.args.get('movie-search') 
+    if movie_search:
+        movie_search_trim = movie_search.strip().lower()
+        movie = movie_repository.get_movie_by_title(movie_search_trim)
+        if movie is not None:
+            rating = movie.rating
+            movie_title = movie.title
+        else:
+            rating = -1
+            movie_title = None
+        return render_template('search_movies.html', search_active=True, rating=rating, movie_title=movie_title)
     else:
-        rating = -1;
-        movie_title = None
-    return render_template('search_movies.html', search_active=True, rating=rating, movie_title=movie_title)
+        return render_template('search_movies.html', search_active=True, rating=None, movie_title=None)
+
 
 #End of Sang Vang's Methods for Feature 3
 
