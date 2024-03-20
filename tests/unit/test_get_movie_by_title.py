@@ -14,14 +14,16 @@ def test_get_movie_by_title():
 
     # Test getting movies by title
     # Tests the movies by title director and rating
-    movie_title = movie_repository_test.get_movie_by_title("The Shawshank Redemption").title
-    movie_director = movie_repository_test.get_movie_by_title("The Shawshank Redemption").director
-    movie_rating = movie_repository_test.get_movie_by_title("The Shawshank Redemption").rating
+    movie_case1 = movie_repository_test.get_movie_by_title("The ShawShank Redemption")
 
-    assert movie_title == "The Shawshank Redemption"
-    assert movie_rating == 3.2
-    assert movie_director == "Frank Darabont"
+    assert movie_case1.title == "The Shawshank Redemption"
+    assert movie_case1.rating == 3.2
+    assert movie_case1.director == "Frank Darabont"
 
-    #Test case sensitivity (there should be none)
-    
+    movie_case_insensitivity = "FoRrEsT GuMp"
+    movie_case2 = movie_repository_test.get_movie_by_title(movie_case_insensitivity)
+
+    assert movie_case2.title == "Forrest Gump"
+    assert movie_case2.director == "Robert Zemeckis"
+    assert movie_case2.rating == 4.5
 
