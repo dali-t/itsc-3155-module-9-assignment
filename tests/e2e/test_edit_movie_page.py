@@ -5,7 +5,6 @@ from app import app  # Import your Flask app here
 from src.repositories.movie_repository import get_movie_repository
 
 
-
 def test_update_movie_endpoint_success(test_app):
         # Creating a movie to update
         #movie = self.repo.create_movie("Titanic", "Director One", 5)
@@ -27,6 +26,4 @@ def test_update_movie_endpoint_failure(self):
     })
     self.assert404(response)
 
-if __name__ == '__main__':
-    import unittest
-    unittest.main()
+
