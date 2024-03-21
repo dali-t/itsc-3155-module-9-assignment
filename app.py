@@ -60,10 +60,30 @@ def get_edit_movies_page(movie_id: int):
 def update_movie(movie_id: int):
     # TODO: Feature 5
     # After updating the movie in the database, we redirect back to that single movie page
-    return redirect(f'/movies/{movie_id}')
+    # After updating the movie in the database, we redirect back to that single movie page
+    title = request.form['title']
+    director = request.form['director']
+    rating = request.form['rating']
+
+
+    # Convert rating to an integer
+    rating = int(rating)
+    #return redirect(f'/movies/{movie_id}')
+    try:
+        # Updating the movie in the repository
+        movie_repository.update_movie(movie_id, title, director, rating)
+       
+        # Redirecting back to the single movie's page on successful update
+        return redirect(url_for('get_single_movie', movie_id=movie_id))
+    except ValueError as e:
+        # Handling the case where the movie ID does not exist
+        return str(e), 404
+
+    #return redirect(f'/movies/{movie_id}')
 
 
 @app.post('/movies/<int:movie_id>/delete')
 def delete_movie(movie_id: int):
     # TODO: Feature 6
     pass
+
