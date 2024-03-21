@@ -45,10 +45,20 @@ def search_movies():
     return render_template('search_movies.html', search_active=True)
 
 
+movie_repo = get_movie_repository()
+#TODO: feature 4
 @app.get('/movies/<int:movie_id>')
 def get_single_movie(movie_id: int):
-    # TODO: Feature 4
-    return render_template('get_single_movie.html')
+    # Retrieve movie details using the get_movie_by_id function
+    movie = movie_repo.get_movie_by_id(movie_id)
+    
+    # Render the template with movie details
+    return render_template('get_single_movie.html', movie=movie)
+
+
+@app.get('/movies/<int:movie_id>/edit')
+def get_edit_movies_page(movie_id: int):
+    return render_template('edit_movies_form.html')
 
 
 @app.get('/movies/<int:movie_id>/edit')
