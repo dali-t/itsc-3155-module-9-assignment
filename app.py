@@ -1,4 +1,5 @@
 from flask import Flask, redirect, render_template, request
+import random
 
 from src.repositories.movie_repository import get_movie_repository
 
@@ -6,6 +7,7 @@ app = Flask(__name__)
 
 # Get the movie repository singleton to use throughout the application
 movie_repository = get_movie_repository()
+
 
 @app.get('/')
 def index():
@@ -15,7 +17,7 @@ def index():
 @app.get('/movies')
 def list_all_movies():
     # TODO: Feature 1
-    list_movies_active = movie_repository.get_all_movies()
+    list_movies_active = movie_repository.get_all_movies().values()
     return render_template('list_all_movies.html', list_movies_active=list_movies_active)
 
 
@@ -31,9 +33,8 @@ def create_movie():
     title = request.form.get("title")
     director = request.form.get("director")
     rating = int(request.form.get("rating"))
-    movie_id = movie_repository.create_movie(title, director, rating)
-    
-
+    movie_id = random.randint(10000, 99999)
+    movie_repository.create_movie(title, director, rating)
     return redirect('/movies')
 
 
