@@ -1,4 +1,5 @@
-from flask import Flask, redirect, render_template, request, url_for
+from flask import Flask, redirect, render_template, request
+import random
 
 from src.repositories.movie_repository import get_movie_repository
 
@@ -16,7 +17,8 @@ def index():
 @app.get('/movies')
 def list_all_movies():
     # TODO: Feature 1
-    return render_template('list_all_movies.html', list_movies_active=True)
+    list_movies_active = movie_repository.get_all_movies().values()
+    return render_template('list_all_movies.html', list_movies_active=list_movies_active)
 
 
 @app.get('/movies/new')
@@ -28,7 +30,13 @@ def create_movies_form():
 def create_movie():
     # TODO: Feature 2
     # After creating the movie in the database, we redirect to the list all movies page
+    title = request.form.get("title")
+    director = request.form.get("director")
+    rating = int(request.form.get("rating"))
+    movie_id = random.randint(10000, 99999)
+    movie_repository.create_movie(title, director, rating)
     return redirect('/movies')
+
 
 
 @app.get('/movies/search')
@@ -52,13 +60,16 @@ def get_edit_movies_page(movie_id: int):
 def update_movie(movie_id: int):
     # TODO: Feature 5
     # After updating the movie in the database, we redirect back to that single movie page
+    # After updating the movie in the database, we redirect back to that single movie page
     title = request.form['title']
     director = request.form['director']
     rating = request.form['rating']
+
+
     # Convert rating to an integer
     rating = int(rating)
-    # return redirect(f'/movies/{movie_id}')
-    try: 
+    #return redirect(f'/movies/{movie_id}')
+    try:
         # Updating the movie in the repository
         movie_repository.update_movie(movie_id, title, director, rating)
        
@@ -68,8 +79,11 @@ def update_movie(movie_id: int):
         # Handling the case where the movie ID does not exist
         return str(e), 404
 
+    #return redirect(f'/movies/{movie_id}')
+
 
 @app.post('/movies/<int:movie_id>/delete')
 def delete_movie(movie_id: int):
     # TODO: Feature 6
     pass
+
